@@ -157,10 +157,12 @@ function GameBoard() {
   );
 }
 
-function ControllBar() {
+function ControlBar() {
   return (
-  <div>
-    <button>Toss</button>
+  <div className={styles.control_bar}>
+    <button>Toss</button>    
+    <div><a>You got a </a><a>{6}</a></div>
+
   </div>);
 }
 export default function Home() {
@@ -170,9 +172,9 @@ export default function Home() {
         <title>Ludo</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <main className={styles.main}>
       <GameBoard></GameBoard>
+      <ControlBar></ControlBar>
       </main>
 
       <footer className={styles.footer}>

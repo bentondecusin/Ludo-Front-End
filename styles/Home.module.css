@@ -5,16 +5,35 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: black;
+  background-color: #333;
 }
 
 .main {
-  padding: 5rem 0;
+  padding: 4rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.left_panel {
+  padding: 5rem 0;
+  float: left;
+}
+
+.control_bar {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  font-size: large;
+  font-family: "Courier New", Courier, monospace;
+  background: azure;
+  border-radius: 2px;
+  width: 100%;
+  height: 30px;
 }
 
 .footer {
