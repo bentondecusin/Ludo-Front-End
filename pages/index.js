@@ -1,17 +1,20 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import gb from '../styles/gb.module.css'
+import React, { useState } from 'react'
 
 function Sq(prop){
-  return (<div className={gb.square} style={{backgroundColor : prop.cl}}>
-    {prop.txt}
+  const orig = prop.txt
+  const [token, setToken] = useState(orig)
+  return (<div className={gb.square} r={prop.r} c={prop.c} style={{backgroundColor : prop.cl}} >
+    {token}
   </div>)
 }
 function GameBoard() {
   return (
     <div>
       <div>
-        <Sq cl="green"></Sq>
+        <Sq cl="green" r="1"></Sq>
         <Sq cl="green"></Sq>
         <Sq cl="black"></Sq>
         <Sq cl="black"></Sq>
