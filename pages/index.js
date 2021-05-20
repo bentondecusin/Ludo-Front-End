@@ -41,7 +41,7 @@ export default function Home() {
       <ControlBar></ControlBar>
       </main>
       <footer className={styles.footer}>
-        By Benton, Melinda, Nickel, and Daniel {JSON.stringify(state)}
+        By Benton, Melinda, Nickel, and Daniel
       </footer>
     </div>
   )

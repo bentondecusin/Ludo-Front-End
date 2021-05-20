@@ -3,24 +3,30 @@ import React, { useState, useEffect } from 'react'
 function notifyUpdate(last_board){
   
 }
+var token_pos = []
 // document.querySelector("div[r='1'][c='1']")
 // document.querySelector("div[pos='1']")
+const token_emojis = [
+  "🐟","🐬","🐳","🐋",
+  "🥖","🥐","🧀","🧇",
+  "🦑","🦐","🦞","🦀",
+  "🥦","🥬","🥒","🍏"]
 
-function Tokens(prop){
-  if(prop.json != null){
-    for(i = 0; i < 16; i++){
-      document.querySelector("div[pos='" + i +"']");
-    }
-  }
+function Tk(prop){
+  // if(prop.json != null){
+  //   for(i = 0; i < 16; i++){
+  //     document.querySelector("div[pos='" + i +"']");
+  //   }
+  // }
+  return (<div className={gb.token} >
+    <a href="javascript:void(0);">{token_emojis[prop.tk_id]}</a>
+  </div>)
 }
 function Sq(prop){
-  const pos = prop.pos == undefined ? "" : prop.pos
-  const orig = prop.txt 
-  var tokenId = -1
+  const pos = prop.pos == undefined ? -99 : Number(prop.pos)
+  const orig = token_pos.includes(pos) ? token_emojis[token_pos.indexOf(pos)] : prop.txt 
+  console.log(orig)
   const [text, setText] = useState(orig)
-  const setTokenId = function(i){
-    setText("♦️")
-  }
   const requestOptions = {
     method: 'POST',
     mode : 'cors',
@@ -67,25 +73,23 @@ export default function GameBoard() {
   const [pos, setPos] = useState (
     []
   )
-
-  var token_pos = []
   for(var i = 0; i < 16; i++){
     token_pos.push(state[i])
   }
   console.log(token_pos)
 
-  const token_emojis = [
-    "🐟","🐬","🐳","🐋",
-    "🥖","🥐","🧀","🧇",
-    "🦑","🦐","🦞","🦀",
-    "🥦","🥬","🥒","🍏"]
+
   
   return (
     <div>
       <div></div>
+      {/* <div>{token_pos.map((tk_pos,tk_id)=>{
+         return <Tk tk_id={tk_id}></Tk>
+        })}
+      </div> */}
       <div>
-        <Sq cl="green" r="1" c="1" pos="16"></Sq>
-        <Sq cl="green" r="1" c="2" pos="13"></Sq>
+        <Sq cl="green" r="1" c="1" pos="-16"></Sq>
+        <Sq cl="green" r="1" c="2" pos="-13"></Sq>
         <Sq cl="black" r="1" c="3"></Sq>
         <Sq cl="black" r="1" c="4"></Sq>
         <Sq cl="lightgrey" r="1" c="5" pos="38"></Sq>
@@ -97,8 +101,8 @@ export default function GameBoard() {
         <Sq cl="blue" r="1" c="11" pos="-1"></Sq>
       </div>
       <div>
-        <Sq cl="green" r="2" c="1" pos="15"></Sq>
-        <Sq cl="green" r="2" c="2" pos="14"></Sq>
+        <Sq cl="green" r="2" c="1" pos="-15"></Sq>
+        <Sq cl="green" r="2" c="2" pos="-14"></Sq>
         <Sq cl="black" r="2" c="3"></Sq>
         <Sq cl="black" r="2" c="4"></Sq>
         <Sq cl="lightgrey" r="2" c="5" pos="37"></Sq>
