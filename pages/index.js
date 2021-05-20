@@ -1,166 +1,11 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import gb from '../styles/gb.module.css'
-import React, { useState } from 'react'
-
-function Sq(prop){
-  const orig = prop.txt
-  const [token, setToken] = useState(orig)
-  return (<div className={gb.square} r={prop.r} c={prop.c} style={{backgroundColor : prop.cl}} >
-    {token}
-  </div>)
-}
-function GameBoard() {
-  return (
-    <div>
-      <div>
-        <Sq cl="green" r="1"></Sq>
-        <Sq cl="green"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey" txt="↓"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="blue"></Sq>
-        <Sq cl="blue"></Sq>
-      </div>
-      <div>
-        <Sq cl="green"></Sq>
-        <Sq cl="green"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightblue"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="blue"></Sq>
-        <Sq cl="blue"></Sq>
-      </div>
-      <div>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightblue"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-      </div>
-      <div>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightblue"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-      </div>
-      <div>
-        <Sq cl="lightgrey" txt="→"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightblue"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey"></Sq>
-      </div>
-      <div>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgreen"></Sq>
-        <Sq cl="lightgreen"></Sq>
-        <Sq cl="lightgreen"></Sq>
-        <Sq cl="lightgreen"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="lightyellow"></Sq>
-        <Sq cl="lightyellow"></Sq>
-        <Sq cl="lightyellow"></Sq>
-        <Sq cl="lightyellow"></Sq>
-        <Sq cl="lightgrey"></Sq>
-      </div> 
-      <div>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="coral"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey" txt="←"></Sq>
-      </div>
-      <div>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="coral"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-      </div>
-      <div>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="coral"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-      </div>
-      <div>
-        <Sq cl="red"></Sq>
-        <Sq cl="red"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="coral"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="yellow"></Sq>
-        <Sq cl="yellow"></Sq>
-      </div>
-      <div>
-        <Sq cl="red"></Sq>
-        <Sq cl="red"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="lightgrey" txt="↑"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="lightgrey"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="black"></Sq>
-        <Sq cl="yellow"></Sq>
-        <Sq cl="yellow"></Sq>
-      </div>
-    </div>
-  );
-}
+import GameBoard from './api/gameboard.js'
+import React, { useEffect, useState } from 'react'
 
 function ControlBar() {
+
   return (
   <div className={styles.control_bar}>
     <button>Toss</button>    
@@ -169,7 +14,24 @@ function ControlBar() {
   </div>);
 }
 export default function Home() {
+  const [state, setState] = useState('');
+  const requestOptions = {
+    method: 'POST',
+    header: { 
+      'Access-Control-Allow-Origin': '*',
+    },
+    mode : 'no-cors',
+    body: JSON.stringify({ title: 'React POST Request Example' })
+  };
+  useEffect(() => {
+    fetch("",requestOptions).then(async (resp) => 
+    { 
+      setState(resp);
+      console.log(resp)
+    });
+  }, []);  
   return (
+    
     <div className={styles.container}>
       <Head>
         <title>Ludo</title>
@@ -178,9 +40,8 @@ export default function Home() {
       <GameBoard></GameBoard>
       <ControlBar></ControlBar>
       </main>
-
       <footer className={styles.footer}>
-        By Benton, Melinda, Nickel, and Daniel
+        By Benton, Melinda, Nickel, and Daniel {JSON.stringify(state)}
       </footer>
     </div>
   )
