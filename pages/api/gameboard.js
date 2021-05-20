@@ -48,7 +48,7 @@ function Sq(prop){
   }
 
   return (<div className={gb.square} r={prop.r} c={prop.c} pos={prop.pos} style={{backgroundColor : prop.cl}} 
-    onClick={clickcell}> {text}
+    onClick={clickcell}> <a href="javascript:void(0);">{text}</a>
   </div>)
 }
 
