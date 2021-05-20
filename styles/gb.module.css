@@ -9,6 +9,16 @@
   height: 40px;
 }
 
-.square:hover {
+.square:hover,
+.token:hover {
   opacity: 50%;
+}
+.token {
+  position: relative;
+  text-align: center;
+  padding: 1px 0px 0px 0px;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  z-index: 10;
 }

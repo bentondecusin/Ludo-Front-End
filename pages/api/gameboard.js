@@ -3,8 +3,17 @@ import React, { useState, useEffect } from 'react'
 function notifyUpdate(last_board){
   
 }
+// document.querySelector("div[r='1'][c='1']")
+// document.querySelector("div[pos='1']")
+
+function Tokens(prop){
+  if(prop.json != null){
+    for(i = 0; i < 16; i++){
+      document.querySelector("div[pos='" + i +"']");
+    }
+  }
+}
 function Sq(prop){
-  //txt
   const pos = prop.pos == undefined ? "" : prop.pos
   const orig = prop.txt 
   var tokenId = -1
@@ -25,22 +34,46 @@ function Sq(prop){
     body: JSON.stringify()
   };
   async function clickcell(){
-    const resp = fetch("../api/hello",requestOptions).then(async (res) => 
-    { 
-      console.log(res)
-    });
+    const resp = fetch("../api/hello").then(async (res) => 
+    res.json()).then(json =>
+      console.log(json)
+    );
     return resp
   }
-  return (<div className={gb.square} r={prop.r} c={prop.c} style={{backgroundColor : prop.cl}} 
-  onClick={clickcell}>
-    {text}
+
+  return (<div className={gb.square} r={prop.r} c={prop.c} pos={prop.pos} style={{backgroundColor : prop.cl}} 
+    onClick={clickcell}> {text}
   </div>)
 }
 
 export default function GameBoard() {
+  // var i = 0 
+  // setInterval(async function(){
+  //   useEffect()
+  //   fetch("../api/hello").then(async (res) => 
+  //   res.json()).then(json =>
+  //     console.log(json)
+  //   );
+  // }, 1000);
+
+  // for(var i = 1; i < 16; i++){
+  //   document.querySelector("div[pos='" + i +"']").innerText=token_emojis[i-1];
+  // }
+
   const [state, setState] = useState(
-    {0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, d: 6, p: 0}
+    {0: -1, 1: -2, 2: -3, 3: -4, 4: -5, 5: -6, 6: -7, 7: -8, 8: -9, 9: -10, 10: -11, 11: -12, 12: -13, 13: -14, 14: -15, 15: -16, d: 0, p: 0}  
   )
+
+  const [pos, setPos] = useState (
+    []
+  )
+
+  var token_pos = []
+  for(var i = 0; i < 16; i++){
+    token_pos.push(state[i])
+  }
+  console.log(token_pos)
+
   const token_emojis = [
     "🐟","🐬","🐳","🐋",
     "🥖","🥐","🧀","🧇",
