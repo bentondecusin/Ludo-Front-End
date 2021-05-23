@@ -16,13 +16,14 @@ const cmdReq = (cmd) => ({
   },
 });
 
-const startRequest = {
+const startReq = {
   method: "POST",
   headers: {
     cmd: "s",
   },
 };
 
+var locked = true;
 var cmd = "s";
 
 var token_pos = [];
@@ -49,19 +50,28 @@ const token_emojis = [
 ];
 
 function InfoBar(props) {
-  const locked = props.locked;
+  // const locked = props.locked;
+  const setInfo = props.setInfo;
   const auto_move = props.m;
   const dice = props.dice;
-  const unlock = props.unlock;
+  const setLock = props.unlock;
   const [toss, showDice] = useState("Click Here to Toss");
   const clk = () => {
-    showDice(dice);
-    unlock();
+    locked = false;
+    console.log(auto_move);
+    if (auto_move == -2) {
+      setInfo("Dice: " + dice + "\n There's no token to move");
+      setTimeout(() => {
+        props.clk(cmdReq(auto_move));
+        console.log("req done");
+      }, 1000);
+    } else {
+      setInfo("Dice: " + dice);
+    }
   };
   return (
     <div className={gb.info} onClick={clk}>
-      {" "}
-      <div href="javascript:void(0);">{props.info}</div>
+      <p href="javascript:void(0);">{props.info}</p>
     </div>
   );
 }
@@ -119,31 +129,12 @@ function Sq(props) {
 export default function GameBoard(props) {
   const [started, getStarted] = useState(false);
   const [tkp, setTkp] = useState([]);
-  if (!started)
-    fetch("http://localhost:6942/api/exchange", startRequest)
-      .then(async (res) => res.json())
-      .then((json) => {
-        getStarted(true);
-        console.log("initial fetch successful");
-        var tokens = [];
-        for (var i = 0; i < 16; i++)
-          tokens.push(json[i] == undefined ? -420 : json[i]);
-        setTkp(tokens);
-        console.log(json);
-      })
-      .catch((e) => {
-        console.error(e);
-        console.log("Initial fetch fails");
-      });
-  const [dice, setDice] = useState(6);
+  const [m, setM] = useState(-2);
   const [info, setInfo] = useState("Click here to toss");
-
-  //set back to true
-  const [locked, setLock] = useState(false);
-  const unlock = () => setLock(false);
-  const lock = () => setLock(true);
+  // const [locked, setLock] = useState(true);
+  // const unlock = () => setLock(false);
+  // const lock = () => setLock(true);
   const clk = function (reqOpt) {
-    console.log(reqOpt);
     if (!locked) {
       fetch("../api/exchange", reqOpt)
         .then(async (res) => res.json())
@@ -168,7 +159,7 @@ export default function GameBoard(props) {
               );
               setTimeout(() => clk(cmdReq(m)), 1000);
             }
-            if (json["m"] == "-1") {
+            if (json["m"] == -1) {
               console.log((Date.now() / 1000) % 60);
               setInfo(
                 "Player " +
@@ -183,23 +174,50 @@ export default function GameBoard(props) {
             }
             if (json["m"] == -2) {
               console.log((Date.now() / 1000) % 60);
-              setInfo("Player " + json["p"] + " has no movable tokens");
-              setTimeout(() => clk({}), 1000);
+              setM(-2);
+              setDice(d);
+              setInfo("Now turn for player " + p + "\nClick here to toss");
+              // setLock(true);
+              // setTimeout(() => clk({}), 1000);
             } else {
-              setInfo("Now turn for player " + json["p"]);
+              console.log((Date.now() / 1000) % 60);
+              setM(-3);
+              // setLock(true);
+              setDice(d);
+              setInfo(
+                "Now turn for player " + json["p"] + "\nClick here to toss"
+              );
             }
           }
           if (json["v"] == 0)
             setInfo(
-              "Invalid move for player " +
-                json["p"] +
-                ", you got a " +
-                json["d"]
+              "Invalid move for player " + json["p"] + "\nDice: " + json["d"]
             );
           else if (json["v"] == 3) setInfo("Game done!");
         });
     }
   };
+
+  //Game Initialization
+  const [dice, setDice] = useState(420);
+
+  if (!started)
+    fetch("http://localhost:6942/api/exchange", startReq)
+      .then(async (res) => res.json())
+      .then((json) => {
+        getStarted(true);
+        console.log("initial fetch successful");
+        var tokens = [];
+        for (var i = 0; i < 16; i++)
+          tokens.push(json[i] == undefined ? -420 : json[i]);
+        setTkp(tokens);
+        setDice(json["d"]);
+        console.log(json);
+      })
+      .catch((e) => {
+        console.error(e);
+        console.log("Initial fetch fails");
+      });
 
   return (
     <div>
@@ -375,12 +393,13 @@ export default function GameBoard(props) {
           cl="white"
           r="1"
           c="11"
-          pos="-100"
+          clk={clk}
           info={info}
-          locked={false}
-          unlock={unlock}
+          // locked={lock}
+          // unlock={setLock}
           dice={dice}
-          m={-1}
+          m={m}
+          setInfo={setInfo}
         ></InfoBar>
       </div>
     </div>
