@@ -76,10 +76,13 @@ function InfoBar(props) {
   );
 }
 function PlayerBox(props) {
-  colors = ["blue", "yellow", "red", "green"];
+  var colors = ["lightblue", "lightyellow", "coral", "lightgreen"];
   return (
-    <div className={gb.dice} style={{ backgroundColor: colors[props.cl] }}>
-      <a href="javascript:void(0);">{toss}</a>
+    <div
+      className={gb.player_box}
+      style={{ backgroundColor: colors[props.player_idx] }}
+    >
+      aaa
     </div>
   );
 }
@@ -220,187 +223,205 @@ export default function GameBoard(props) {
       });
 
   return (
-    <div>
+    <div className={gb.entire_board}>
       <div>
-        <Sq cl="green" r="1" c="1" pos="-16" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="green" r="1" c="2" pos="-13" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="1" c="3" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="1" c="4" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="1" c="5" pos="38" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="1" c="6" pos="39" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="1" c="7" pos="0" txt="↓" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="1" c="8" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="1" c="9" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="blue" r="1" c="10" pos="-4" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="blue" r="1" c="11" pos="-1" clk={clk} tkp={tkp}></Sq>
+        <PlayerBox player_idx="3"></PlayerBox>
+        <PlayerBox player_idx="2"></PlayerBox>
       </div>
       <div>
-        <Sq cl="green" r="2" c="1" pos="-15" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="green" r="2" c="2" pos="-14" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="2" c="3" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="2" c="4" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="2" c="5" pos="37" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightblue" r="2" c="6" pos="40" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="2" c="7" pos="1" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="2" c="8" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="2" c="9" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="blue" r="2" c="10" pos="-3" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="blue" r="2" c="11" pos="-2" clk={clk} tkp={tkp}></Sq>
+        <div>
+          <Sq cl="green" r="1" c="1" pos="-16" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="green" r="1" c="2" pos="-13" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="1" c="3" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="1" c="4" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="1" c="5" pos="38" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="1" c="6" pos="39" clk={clk} tkp={tkp}></Sq>
+          <Sq
+            cl="lightgrey"
+            r="1"
+            c="7"
+            pos="0"
+            txt="↓"
+            clk={clk}
+            tkp={tkp}
+          ></Sq>
+          <Sq cl="black" r="1" c="8" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="1" c="9" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="blue" r="1" c="10" pos="-4" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="blue" r="1" c="11" pos="-1" clk={clk} tkp={tkp}></Sq>
+        </div>
+        <div>
+          <Sq cl="green" r="2" c="1" pos="-15" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="green" r="2" c="2" pos="-14" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="2" c="3" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="2" c="4" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="2" c="5" pos="37" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightblue" r="2" c="6" pos="40" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="2" c="7" pos="1" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="2" c="8" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="2" c="9" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="blue" r="2" c="10" pos="-3" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="blue" r="2" c="11" pos="-2" clk={clk} tkp={tkp}></Sq>
+        </div>
+        <div>
+          <Sq cl="black" r="3" c="1" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="3" c="2" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="3" c="3" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="3" c="4" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="3" c="5" pos="36" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightblue" r="3" c="6" pos="41" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="3" c="7" pos="2" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="3" c="8" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="3" c="9" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="3" c="10" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="3" c="11" clk={clk} tkp={tkp}></Sq>
+        </div>
+        <div>
+          <Sq cl="black" r="4" c="1" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="4" c="2" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="4" c="3" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="4" c="4" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="4" c="5" pos="35" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightblue" r="4" c="6" pos="42" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="4" c="7" pos="3" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="4" c="8" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="4" c="9" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="4" c="10" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="4" c="11" clk={clk} tkp={tkp}></Sq>
+        </div>
+        <div>
+          <Sq
+            cl="lightgrey"
+            txt="→"
+            r="5"
+            c="1"
+            pos="30"
+            clk={clk}
+            tkp={tkp}
+          ></Sq>
+          <Sq cl="lightgrey" r="5" c="2" pos="31" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="5" c="3" pos="32" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="5" c="4" pos="33" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="5" c="5" pos="34" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightblue" r="5" c="6" pos="43" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="5" c="7" pos="4" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="5" c="8" pos="5" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="5" c="9" pos="6" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="5" c="10" pos="7" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="5" c="11" pos="8" clk={clk} tkp={tkp}></Sq>
+        </div>
+        <div>
+          <Sq cl="lightgrey" r="6" c="1" pos="29" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgreen" r="6" c="2" pos="52" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgreen" r="6" c="3" pos="53" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgreen" r="6" c="4" pos="54" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgreen" r="6" c="5" pos="55" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="6" c="6" pos="6969" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightyellow" r="6" c="7" pos="47" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightyellow" r="6" c="8" pos="46" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightyellow" r="6" c="9" pos="45" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightyellow" r="6" c="10" pos="44" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="6" c="11" pos="9" clk={clk} tkp={tkp}></Sq>
+        </div>
+        <div>
+          <Sq cl="lightgrey" r="7" c="1" pos="28" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="7" c="2" pos="27" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="7" c="3" pos="26" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="7" c="4" pos="25" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="7" c="5" pos="24" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="coral" r="7" c="6" pos="51" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="7" c="7" pos="14" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="7" c="8" pos="13" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="7" c="9" pos="12" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="7" c="10" pos="11" clk={clk} tkp={tkp}></Sq>
+          <Sq
+            cl="lightgrey"
+            txt="←"
+            r="7"
+            c="11"
+            pos="10"
+            clk={clk}
+            tkp={tkp}
+          ></Sq>
+        </div>
+        <div>
+          <Sq cl="black" r="8" c="1" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="8" c="2" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="8" c="3" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="8" c="4" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="8" c="5" pos="23" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="coral" r="8" c="6" pos="50" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="8" c="7" pos="15" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="8" c="8" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="8" c="9" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="8" c="10" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="8" c="11" clk={clk} tkp={tkp}></Sq>
+        </div>
+        <div>
+          <Sq cl="black" r="9" c="1" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="9" c="2" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="9" c="3" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="9" c="4" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="9" c="5" pos="22" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="coral" r="9" c="6" pos="49" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="9" c="7" pos="16" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="9" c="8" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="9" c="9" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="9" c="10" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="9" c="11" clk={clk} tkp={tkp}></Sq>
+        </div>
+        <div>
+          <Sq cl="red" r="10" c="1" pos="-12" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="red" r="10" c="2" pos="-9" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="10" c="3" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="10" c="4" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="10" c="5" pos="21" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="coral" r="10" c="6" pos="48" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="10" c="7" pos="17" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="10" c="8" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="10" c="9" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="yellow" r="10" c="10" pos="-8" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="yellow" r="10" c="11" pos="-5" clk={clk} tkp={tkp}></Sq>
+        </div>
+        <div>
+          <Sq cl="red" r="1" c="1" pos="-11" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="red" r="1" c="2" pos="-10" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="1" c="3" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="1" c="4" clk={clk} tkp={tkp}></Sq>
+          <Sq
+            cl="lightgrey"
+            txt="↑"
+            r="1"
+            c="5"
+            pos="20"
+            clk={clk}
+            tkp={tkp}
+          ></Sq>
+          <Sq cl="lightgrey" r="1" c="6" pos="19" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="lightgrey" r="1" c="7" pos="18" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="1" c="8" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="black" r="1" c="9" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="yellow" r="1" c="10" pos="-7" clk={clk} tkp={tkp}></Sq>
+          <Sq cl="yellow" r="1" c="11" pos="-6" clk={clk} tkp={tkp}></Sq>
+        </div>
+        <div className={styles.control_bar}>
+          <InfoBar
+            cl="white"
+            r="1"
+            c="11"
+            clk={clk}
+            info={info}
+            // locked={lock}
+            // unlock={setLock}
+            dice={dice}
+            m={m}
+            setInfo={setInfo}
+          ></InfoBar>
+        </div>
       </div>
       <div>
-        <Sq cl="black" r="3" c="1" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="3" c="2" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="3" c="3" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="3" c="4" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="3" c="5" pos="36" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightblue" r="3" c="6" pos="41" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="3" c="7" pos="2" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="3" c="8" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="3" c="9" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="3" c="10" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="3" c="11" clk={clk} tkp={tkp}></Sq>
-      </div>
-      <div>
-        <Sq cl="black" r="4" c="1" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="4" c="2" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="4" c="3" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="4" c="4" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="4" c="5" pos="35" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightblue" r="4" c="6" pos="42" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="4" c="7" pos="3" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="4" c="8" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="4" c="9" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="4" c="10" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="4" c="11" clk={clk} tkp={tkp}></Sq>
-      </div>
-      <div>
-        <Sq
-          cl="lightgrey"
-          txt="→"
-          r="5"
-          c="1"
-          pos="30"
-          clk={clk}
-          tkp={tkp}
-        ></Sq>
-        <Sq cl="lightgrey" r="5" c="2" pos="31" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="5" c="3" pos="32" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="5" c="4" pos="33" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="5" c="5" pos="34" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightblue" r="5" c="6" pos="43" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="5" c="7" pos="4" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="5" c="8" pos="5" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="5" c="9" pos="6" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="5" c="10" pos="7" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="5" c="11" pos="8" clk={clk} tkp={tkp}></Sq>
-      </div>
-      <div>
-        <Sq cl="lightgrey" r="6" c="1" pos="29" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgreen" r="6" c="2" pos="52" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgreen" r="6" c="3" pos="53" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgreen" r="6" c="4" pos="54" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgreen" r="6" c="5" pos="55" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="6" c="6" pos="6969" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightyellow" r="6" c="7" pos="47" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightyellow" r="6" c="8" pos="46" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightyellow" r="6" c="9" pos="45" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightyellow" r="6" c="10" pos="44" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="6" c="11" pos="9" clk={clk} tkp={tkp}></Sq>
-      </div>
-      <div>
-        <Sq cl="lightgrey" r="7" c="1" pos="28" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="7" c="2" pos="27" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="7" c="3" pos="26" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="7" c="4" pos="25" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="7" c="5" pos="24" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="coral" r="7" c="6" pos="51" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="7" c="7" pos="14" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="7" c="8" pos="13" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="7" c="9" pos="12" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="7" c="10" pos="11" clk={clk} tkp={tkp}></Sq>
-        <Sq
-          cl="lightgrey"
-          txt="←"
-          r="7"
-          c="11"
-          pos="10"
-          clk={clk}
-          tkp={tkp}
-        ></Sq>
-      </div>
-      <div>
-        <Sq cl="black" r="8" c="1" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="8" c="2" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="8" c="3" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="8" c="4" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="8" c="5" pos="23" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="coral" r="8" c="6" pos="50" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="8" c="7" pos="15" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="8" c="8" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="8" c="9" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="8" c="10" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="8" c="11" clk={clk} tkp={tkp}></Sq>
-      </div>
-      <div>
-        <Sq cl="black" r="9" c="1" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="9" c="2" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="9" c="3" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="9" c="4" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="9" c="5" pos="22" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="coral" r="9" c="6" pos="49" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="9" c="7" pos="16" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="9" c="8" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="9" c="9" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="9" c="10" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="9" c="11" clk={clk} tkp={tkp}></Sq>
-      </div>
-      <div>
-        <Sq cl="red" r="10" c="1" pos="-12" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="red" r="10" c="2" pos="-9" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="10" c="3" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="10" c="4" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="10" c="5" pos="21" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="coral" r="10" c="6" pos="48" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="10" c="7" pos="17" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="10" c="8" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="10" c="9" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="yellow" r="10" c="10" pos="-8" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="yellow" r="10" c="11" pos="-5" clk={clk} tkp={tkp}></Sq>
-      </div>
-      <div>
-        <Sq cl="red" r="1" c="1" pos="-11" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="red" r="1" c="2" pos="-10" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="1" c="3" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="1" c="4" clk={clk} tkp={tkp}></Sq>
-        <Sq
-          cl="lightgrey"
-          txt="↑"
-          r="1"
-          c="5"
-          pos="20"
-          clk={clk}
-          tkp={tkp}
-        ></Sq>
-        <Sq cl="lightgrey" r="1" c="6" pos="19" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" r="1" c="7" pos="18" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="1" c="8" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="1" c="9" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="yellow" r="1" c="10" pos="-7" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="yellow" r="1" c="11" pos="-6" clk={clk} tkp={tkp}></Sq>
-      </div>
-      <div className={styles.control_bar}>
-        <InfoBar
-          cl="white"
-          r="1"
-          c="11"
-          clk={clk}
-          info={info}
-          // locked={lock}
-          // unlock={setLock}
-          dice={dice}
-          m={m}
-          setInfo={setInfo}
-        ></InfoBar>
+        <PlayerBox player_idx="0"></PlayerBox>
+        <PlayerBox player_idx="1"></PlayerBox>
       </div>
     </div>
   );
