@@ -2,6 +2,7 @@ import gb from "../../styles/gb.module.css";
 import React, { useState, useEffect } from "react";
 import styles from "../../styles/Home.module.css";
 
+const benchmark = 1;
 function getAllIndices(arr, val) {
   var indices = [],
     i;
@@ -54,17 +55,16 @@ function InfoBar(props) {
   const setInfo = props.setInfo;
   const auto_move = props.m;
   const dice = props.dice;
-  const setLock = props.unlock;
-  const [toss, showDice] = useState("Click Here to Toss");
   const clk = () => {
     locked = false;
-    console.log(auto_move);
-    if (auto_move == -2) {
+    if (dice == 420) setInfo("Awe snap, the server is down");
+    else if (auto_move == -2) {
+      console.log(locked);
       setInfo("Dice: " + dice + "\n There's no token to move");
       setTimeout(() => {
         props.clk(cmdReq(auto_move));
         console.log("req done");
-      }, 1000);
+      }, 1000 * benchmark);
     } else {
       setInfo("Dice: " + dice);
     }
@@ -109,7 +109,7 @@ function Sq(props) {
   const tkp = props.tkp;
   const pos = props.pos == undefined ? -99 : Number(props.pos);
   const tokens = getAllIndices(tkp, pos);
-  const orig = props.txt;
+  const orig = tkp.includes(pos - 420) ? "👌" : props.txt;
   return (
     <div
       className={gb.square}
@@ -149,41 +149,41 @@ export default function GameBoard(props) {
             setInfo("Player " + json["p"] + " has moved");
             var m = json["m"];
             var d = json["d"];
-            var p = json["p"];
+            var p = json["p"] + 1;
             if (m >= 0) {
-              console.log((Date.now() / 1000) % 60);
               setInfo("Player " + p + "(AI) got " + d);
               setTimeout(
                 () => setInfo("Player " + p + "(AI) moves " + token_emojis[m]),
-                1000
+                1000 * benchmark
               );
-              setTimeout(() => clk(cmdReq(m)), 1000);
-            }
-            if (json["m"] == -1) {
-              console.log((Date.now() / 1000) % 60);
-              setInfo(
-                "Player " +
-                  p +
-                  "(AI) got " +
-                  d +
-                  "\nPlayer " +
-                  p +
-                  " has no movable tokens"
-              );
-              setTimeout(() => clk({}), 1000);
-            }
-            if (json["m"] == -2) {
-              console.log((Date.now() / 1000) % 60);
+              setTimeout(() => clk(cmdReq(m)), 1000 * benchmark);
+            } else if (json["m"] == -1) {
+              setInfo("Now turn for player " + p + "(AI)");
+              //if you see this horrible code, don't be surprised
+              setTimeout(() => {
+                console.log("ai" + p + " has no movables");
+                setInfo(
+                  "Player " +
+                    p +
+                    "(AI) got " +
+                    d +
+                    "\nPlayer " +
+                    p +
+                    " has no movable tokens"
+                );
+                setTimeout(() => clk({}), 2000 * benchmark);
+              }, 2000 * benchmark);
+            } else if (json["m"] == -2) {
+              console.log("pl" + p + " has no movables");
+              locked = true;
               setM(-2);
               setDice(d);
               setInfo("Now turn for player " + p + "\nClick here to toss");
-              // setLock(true);
-              // setTimeout(() => clk({}), 1000);
             } else {
               console.log((Date.now() / 1000) % 60);
               setM(-3);
-              // setLock(true);
               setDice(d);
+              locked = true;
               setInfo(
                 "Now turn for player " + json["p"] + "\nClick here to toss"
               );
@@ -300,7 +300,7 @@ export default function GameBoard(props) {
         <Sq cl="lightgreen" r="6" c="3" pos="53" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgreen" r="6" c="4" pos="54" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgreen" r="6" c="5" pos="55" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="6" c="6" pos="420" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="6" c="6" pos="6969" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightyellow" r="6" c="7" pos="47" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightyellow" r="6" c="8" pos="46" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightyellow" r="6" c="9" pos="45" clk={clk} tkp={tkp}></Sq>
