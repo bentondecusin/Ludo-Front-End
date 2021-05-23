@@ -3,14 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "cus" : "node server.js",
+    "cus": "node server.js",
     "dev": "next dev -p 6942",
     "build": "next build -p 6942",
-    "start": "next start -p 6942"
+    "start": "next start -p 6942",
+    "format": "prettier --write \"{,!(.next)/**/}*.{js, jsx}\""
+
   },
   "dependencies": {
     "next": "10.1.3",
     "react": "17.0.2",
+    "react-dice-complete": "^1.2.1",
     "react-dom": "17.0.2"
   }
 }
