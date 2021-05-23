@@ -9,6 +9,17 @@
   height: 40px;
 }
 
+.info {
+  display: inline-block;
+  margin: 0px 1px 0px 1px;
+  font-size: 20px;
+  text-align: center;
+  padding: 10px 10px 10px 10px;
+  border-radius: 10px;
+  height: 60px;
+  color: white;
+}
+
 .square:hover,
 .token:hover {
   opacity: 70%;
@@ -20,15 +31,17 @@
 
 .tk {
   display: flex;
-  padding: 1px 0px 0px 0px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.007);
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  font-size: 100%;
-  float: left;
+  position: absolute;
+  z-index: inherit;
   width: 40px;
   height: 40px;
+  float: left;
+  padding: 1px 0px 0px 0px;
+  border-radius: 50%;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.007);
+  font-size: 100%;
+  justify-content: center;
+  flex-direction: column;
   z-index: 10;
 }

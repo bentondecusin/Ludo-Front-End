@@ -1,84 +1,208 @@
-import gb from '../../styles/gb.module.css'
-import React, { useState, useEffect } from 'react'
-import styles from '../../styles/Home.module.css'
+import gb from "../../styles/gb.module.css";
+import React, { useState, useEffect } from "react";
+import styles from "../../styles/Home.module.css";
 
-function notifyUpdate(last_board){
-  
+function getAllIndices(arr, val) {
+  var indices = [],
+    i;
+  for (i = 0; i < 16; i++) if (arr[i] === val) indices.push(i);
+  return indices;
 }
+
+const cmdReq = (cmd) => ({
+  method: "POST",
+  headers: {
+    cmd: cmd,
+  },
+});
 
 const startRequest = {
-  headers : {
-    "cmd" : "s"
-  }
-}
+  method: "POST",
+  headers: {
+    cmd: "s",
+  },
+};
 
-var token_pos = []
+var cmd = "s";
+
+var token_pos = [];
 // document.querySelector("div[r='1'][c='1']")
 // document.querySelector("div[pos='1']")
 const token_emojis = [
-  "🐟","🐬","🐳","🐋",
-  "🥖","🥐","🧀","🧇",
-  "🦑","🦐","🦞","🦀",
-  "🥦","🥬","🥒","🍏","🎲"]
+  "🐟",
+  "🐬",
+  "🐳",
+  "🐋",
+  "🥖",
+  "🥐",
+  "🧀",
+  "🧇",
+  "🦑",
+  "🦐",
+  "🦞",
+  "🦀",
+  "🥦",
+  "🥬",
+  "🥒",
+  "🍏",
+  "🎲",
+];
 
-function Sq(prop){
-  const tkp = prop.tkp
-  const pos = prop.pos == undefined ? -99 : Number(prop.pos)
-  const orig = tkp.includes(pos) ? token_emojis[tkp.indexOf(pos)] : prop.txt 
+function InfoBar(props) {
+  const locked = props.locked;
+  const auto_move = props.m;
+  const dice = props.dice;
+  const unlock = props.unlock;
+  const [toss, showDice] = useState("Click Here to Toss");
+  const clk = () => {
+    showDice(dice);
+    unlock();
+  };
+  return (
+    <div className={gb.info} onClick={clk}>
+      {" "}
+      <div href="javascript:void(0);">{props.info}</div>
+    </div>
+  );
+}
+function PlayerBox(props) {
+  colors = ["blue", "yellow", "red", "green"];
+  return (
+    <div className={gb.dice} style={{ backgroundColor: colors[props.cl] }}>
+      <a href="javascript:void(0);">{toss}</a>
+    </div>
+  );
+}
+function Tk(props) {
   const reqOpt = {
-    method: 'POST',
-    headers : {
-      "cmd" : prop.pos
-    }
-  }; 
-  // async function clickcell(){
-  //   var tokens = []
-  //   const resp = fetch("../api/exchange", requestOptions).then(async (res) => 
-  //   res.json()).then((json) => {
-  //     console.log(json); //print current json
-  //     console.log(json)
-  //     for (var i = 0; i < 16; i++) tokens.push((json[i] == undefined) ? -420 : json[i])
-  //     GameBoard.setState(tokens)
-  //   }
-  //     );
-  //   return resp
-  // }
-  console.log(tkp)
-  return (<div className={gb.square} r={prop.r} c={prop.c} pos={prop.pos} style={{backgroundColor : prop.cl}} 
-    onClick={prop.clk}> <a class={gb.tk} href="javascript:void(0);">{orig}</a>
-  </div>)
+    method: "POST",
+    headers: {
+      cmd: props.tk_id,
+    },
+  };
+  const clk = () => {
+    props.tk_clk(reqOpt);
+    console.log("token " + props.tk_id + " clicked");
+  };
+  return (
+    <a
+      href="javascript:void(0);"
+      class={gb.tk}
+      onClick={clk}
+      href="javascript:void(0);"
+    >
+      {token_emojis[props.tk_id]}
+    </a>
+  );
+}
+function Sq(props) {
+  const tkp = props.tkp;
+  const pos = props.pos == undefined ? -99 : Number(props.pos);
+  const tokens = getAllIndices(tkp, pos);
+  const orig = props.txt;
+  return (
+    <div
+      className={gb.square}
+      r={props.r}
+      c={props.c}
+      pos={props.pos}
+      style={{ backgroundColor: props.cl }}
+    >
+      <a class={gb.tk}>{orig}</a>
+      {tokens.map((token) => (
+        <Tk tk_clk={props.clk} tk_id={token}></Tk>
+      ))}
+    </div>
+  );
 }
 
-export default function GameBoard() {
+export default function GameBoard(props) {
+  const [started, getStarted] = useState(false);
+  const [tkp, setTkp] = useState([]);
+  if (!started)
+    fetch("http://localhost:6942/api/exchange", startRequest)
+      .then(async (res) => res.json())
+      .then((json) => {
+        getStarted(true);
+        console.log("initial fetch successful");
+        var tokens = [];
+        for (var i = 0; i < 16; i++)
+          tokens.push(json[i] == undefined ? -420 : json[i]);
+        setTkp(tokens);
+        console.log(json);
+      })
+      .catch((e) => {
+        console.error(e);
+        console.log("Initial fetch fails");
+      });
+  const [dice, setDice] = useState(6);
+  const [info, setInfo] = useState("Click here to toss");
 
-  const [tkp, SetTokenPos] = useState(
-    [-1,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11,-12,-13,-14,-15,0,0]
-  )
-  const clk = function(reqOpt){
-    fetch("../api/exchange", reqOpt).then(async (res) => 
-    res.json()).then((json) => {
-      var tokens = []
-      console.log(json); //print current json
-      for (var i = 0; i < 16; i++) tokens.push((json[i] == undefined) ? -420 : json[i])
-        SetTokenPos(tokens)
-      }
-    );
-  }
+  //set back to true
+  const [locked, setLock] = useState(false);
+  const unlock = () => setLock(false);
+  const lock = () => setLock(true);
+  const clk = function (reqOpt) {
+    console.log(reqOpt);
+    if (!locked) {
+      fetch("../api/exchange", reqOpt)
+        .then(async (res) => res.json())
+        .then((json) => {
+          console.log(json);
+          var tokens = [];
+          for (var i = 0; i < 16; i++)
+            tokens.push(json[i] == undefined ? -420 : json[i]);
+          setTkp(tokens);
+          //valid
+          if (json["v"] == 1) {
+            setInfo("Player " + json["p"] + " has moved");
+            var m = json["m"];
+            var d = json["d"];
+            var p = json["p"];
+            if (m >= 0) {
+              console.log((Date.now() / 1000) % 60);
+              setInfo("Player " + p + "(AI) got " + d);
+              setTimeout(
+                () => setInfo("Player " + p + "(AI) moves " + token_emojis[m]),
+                1000
+              );
+              setTimeout(() => clk(cmdReq(m)), 1000);
+            }
+            if (json["m"] == "-1") {
+              console.log((Date.now() / 1000) % 60);
+              setInfo(
+                "Player " +
+                  p +
+                  "(AI) got " +
+                  d +
+                  "\nPlayer " +
+                  p +
+                  " has no movable tokens"
+              );
+              setTimeout(() => clk({}), 1000);
+            }
+            if (json["m"] == -2) {
+              console.log((Date.now() / 1000) % 60);
+              setInfo("Player " + json["p"] + " has no movable tokens");
+              setTimeout(() => clk({}), 1000);
+            } else {
+              setInfo("Now turn for player " + json["p"]);
+            }
+          }
+          if (json["v"] == 0)
+            setInfo(
+              "Invalid move for player " +
+                json["p"] +
+                ", you got a " +
+                json["d"]
+            );
+          else if (json["v"] == 3) setInfo("Game done!");
+        });
+    }
+  };
 
-
-  fetch("../api/exchange",startRequest).then(async (res) => 
-    res.json()).then((json) => {console.log(json)})
-
-
-  console.log(token_pos)
-  var st = {}
   return (
     <div>
-      <div></div>
-      {/* <div>{token_pos.map((tk_pos,tk_id)=>{
-         return <Tk tk_id={tk_id}></Tk>
-        })}
-      </div> */}
       <div>
         <Sq cl="green" r="1" c="1" pos="-16" clk={clk} tkp={tkp}></Sq>
         <Sq cl="green" r="1" c="2" pos="-13" clk={clk} tkp={tkp}></Sq>
@@ -86,7 +210,7 @@ export default function GameBoard() {
         <Sq cl="black" r="1" c="4" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="1" c="5" pos="38" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="1" c="6" pos="39" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey"  r="1" c="7" pos="0" txt="↓" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="lightgrey" r="1" c="7" pos="0" txt="↓" clk={clk} tkp={tkp}></Sq>
         <Sq cl="black" r="1" c="8" clk={clk} tkp={tkp}></Sq>
         <Sq cl="black" r="1" c="9" clk={clk} tkp={tkp}></Sq>
         <Sq cl="blue" r="1" c="10" pos="-4" clk={clk} tkp={tkp}></Sq>
@@ -106,33 +230,41 @@ export default function GameBoard() {
         <Sq cl="blue" r="2" c="11" pos="-2" clk={clk} tkp={tkp}></Sq>
       </div>
       <div>
-        <Sq cl="black" r="3" c="1"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="3" c="2"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="3" c="3"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="3" c="4"  clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="3" c="1" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="3" c="2" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="3" c="3" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="3" c="4" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="3" c="5" pos="36" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightblue" r="3" c="6" pos="41" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="3" c="7" pos="2" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="3" c="8"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="3" c="9"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="3" c="10"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="3" c="11"  clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="3" c="8" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="3" c="9" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="3" c="10" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="3" c="11" clk={clk} tkp={tkp}></Sq>
       </div>
       <div>
-        <Sq cl="black" r="4" c="1"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="4" c="2"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="4" c="3"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="4" c="4"  clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="4" c="1" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="4" c="2" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="4" c="3" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="4" c="4" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="4" c="5" pos="35" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightblue" r="4" c="6" pos="42" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="4" c="7" pos="3" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="4" c="8"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="4" c="9"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="4" c="10"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="4" c="11"  clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="4" c="8" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="4" c="9" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="4" c="10" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="4" c="11" clk={clk} tkp={tkp}></Sq>
       </div>
       <div>
-        <Sq cl="lightgrey" txt="→" r="5" c="1" pos="30" clk={clk} tkp={tkp}></Sq>
+        <Sq
+          cl="lightgrey"
+          txt="→"
+          r="5"
+          c="1"
+          pos="30"
+          clk={clk}
+          tkp={tkp}
+        ></Sq>
         <Sq cl="lightgrey" r="5" c="2" pos="31" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="5" c="3" pos="32" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="5" c="4" pos="33" clk={clk} tkp={tkp}></Sq>
@@ -150,13 +282,13 @@ export default function GameBoard() {
         <Sq cl="lightgreen" r="6" c="3" pos="53" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgreen" r="6" c="4" pos="54" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgreen" r="6" c="5" pos="55" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="6" c="6" pos="44" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="6" c="6" pos="420" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightyellow" r="6" c="7" pos="47" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightyellow" r="6" c="8" pos="46" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightyellow" r="6" c="9" pos="45" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightyellow" r="6" c="10" pos="44" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="6" c="11" pos="9" clk={clk} tkp={tkp}></Sq>
-      </div> 
+      </div>
       <div>
         <Sq cl="lightgrey" r="7" c="1" pos="28" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="7" c="2" pos="27" clk={clk} tkp={tkp}></Sq>
@@ -168,65 +300,89 @@ export default function GameBoard() {
         <Sq cl="lightgrey" r="7" c="8" pos="13" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="7" c="9" pos="12" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="7" c="10" pos="11" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" txt="←" r="7" c="11" pos="10" clk={clk} tkp={tkp}></Sq>
+        <Sq
+          cl="lightgrey"
+          txt="←"
+          r="7"
+          c="11"
+          pos="10"
+          clk={clk}
+          tkp={tkp}
+        ></Sq>
       </div>
       <div>
-        <Sq cl="black" r="8" c="1"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="8" c="2"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="8" c="3"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="8" c="4"  clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="8" c="1" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="8" c="2" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="8" c="3" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="8" c="4" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="8" c="5" pos="23" clk={clk} tkp={tkp}></Sq>
         <Sq cl="coral" r="8" c="6" pos="50" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="8" c="7" pos="15" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="8" c="8"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="8" c="9"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="8" c="10"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="8" c="11"  clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="8" c="8" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="8" c="9" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="8" c="10" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="8" c="11" clk={clk} tkp={tkp}></Sq>
       </div>
       <div>
-        <Sq cl="black" r="9" c="1"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="9" c="2"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="9" c="3"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="9" c="4"  clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="9" c="1" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="9" c="2" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="9" c="3" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="9" c="4" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="9" c="5" pos="22" clk={clk} tkp={tkp}></Sq>
         <Sq cl="coral" r="9" c="6" pos="49" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="9" c="7" pos="16" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="9" c="8"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="9" c="9"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="9" c="10"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="9" c="11"  clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="9" c="8" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="9" c="9" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="9" c="10" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="9" c="11" clk={clk} tkp={tkp}></Sq>
       </div>
       <div>
         <Sq cl="red" r="10" c="1" pos="-12" clk={clk} tkp={tkp}></Sq>
         <Sq cl="red" r="10" c="2" pos="-9" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="10" c="3"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="10" c="4"  clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="10" c="3" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="10" c="4" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="10" c="5" pos="21" clk={clk} tkp={tkp}></Sq>
         <Sq cl="coral" r="10" c="6" pos="48" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="10" c="7" pos="17" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="10" c="8"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="10" c="9"  clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="10" c="8" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="10" c="9" clk={clk} tkp={tkp}></Sq>
         <Sq cl="yellow" r="10" c="10" pos="-8" clk={clk} tkp={tkp}></Sq>
         <Sq cl="yellow" r="10" c="11" pos="-5" clk={clk} tkp={tkp}></Sq>
       </div>
       <div>
         <Sq cl="red" r="1" c="1" pos="-11" clk={clk} tkp={tkp}></Sq>
         <Sq cl="red" r="1" c="2" pos="-10" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="1" c="3"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="1" c="4"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="lightgrey" txt="↑" r="1" c="5" pos="20" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="1" c="3" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="1" c="4" clk={clk} tkp={tkp}></Sq>
+        <Sq
+          cl="lightgrey"
+          txt="↑"
+          r="1"
+          c="5"
+          pos="20"
+          clk={clk}
+          tkp={tkp}
+        ></Sq>
         <Sq cl="lightgrey" r="1" c="6" pos="19" clk={clk} tkp={tkp}></Sq>
         <Sq cl="lightgrey" r="1" c="7" pos="18" clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="1" c="8"  clk={clk} tkp={tkp}></Sq>
-        <Sq cl="black" r="1" c="9"  clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="1" c="8" clk={clk} tkp={tkp}></Sq>
+        <Sq cl="black" r="1" c="9" clk={clk} tkp={tkp}></Sq>
         <Sq cl="yellow" r="1" c="10" pos="-7" clk={clk} tkp={tkp}></Sq>
         <Sq cl="yellow" r="1" c="11" pos="-6" clk={clk} tkp={tkp}></Sq>
       </div>
       <div className={styles.control_bar}>
-      <Sq cl="black" r="1" c="11" pos="-100" txt="🎲" clk={clk} tkp={tkp}></Sq>
-      <div><a>You got a </a><a>{6}</a></div>
-
-  </div>
+        <InfoBar
+          cl="white"
+          r="1"
+          c="11"
+          pos="-100"
+          info={info}
+          locked={false}
+          unlock={unlock}
+          dice={dice}
+          m={-1}
+        ></InfoBar>
+      </div>
     </div>
   );
 }
