@@ -5,7 +5,7 @@ export default function handler(req, res) {
     method: "POST",
     body: cmd,
   };
-  fetch("http://0.0.0.0:2333", reqOpt)
+  fetch("http://116.63.157.7:2333/", reqOpt)
     .then((res) => res.json())
     .then((data) => res.status(200).json(data))
     .catch((e) => {
