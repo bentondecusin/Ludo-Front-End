@@ -70,19 +70,50 @@ function InfoBar(props) {
     }
   };
   return (
-    <div className={gb.info} onClick={clk}>
-      <p href="javascript:void(0);">{props.info}</p>
+    <div className={gb.info} onClick={clk} href="javascript:void(0);">
+      <a href="javascript:void(0);">{props.info}</a>
     </div>
   );
 }
 function PlayerBox(props) {
-  var colors = ["lightblue", "lightyellow", "coral", "lightgreen"];
+  const tpk = props.tkp;
+  const dice = props.dice;
+  const curPlayer = Number(props.cur_player);
+  const colors = ["lightblue", "lightyellow", "coral", "lightgreen"];
+  const player_id = Number(props.player_idx);
+  var tokens = [];
+  for (var i = 0; i < 4; i++) tokens.push(Number(tpk[player_id * 4 + i]));
+  console.log(tokens);
   return (
     <div
       className={gb.player_box}
-      style={{ backgroundColor: colors[props.player_idx] }}
+      style={
+        player_id == curPlayer
+          ? {
+              backgroundColor: colors[props.player_idx],
+              border: "red solid 5px",
+            }
+          : {
+              backgroundColor: colors[props.player_idx],
+              border: "white solid 5px",
+            }
+      }
     >
-      aaa
+      <a>Player: {player_id + 1}</a>
+      {tokens.map((token_pos, token_idx) => (
+        <a>
+          {token_emojis[token_idx + player_id * 4] +
+            " : " +
+            (token_pos < -200
+              ? "Retired (Safe)"
+              : token_pos < 0
+              ? "Home (Safe)"
+              : token_pos > 44
+              ? "On strip"
+              : "On track (Safe)")}
+        </a>
+      ))}
+      <a>{player_id == curPlayer && !locked ? "Dice: " + dice : ""}</a>
     </div>
   );
 }
@@ -98,12 +129,7 @@ function Tk(props) {
     console.log("token " + props.tk_id + " clicked");
   };
   return (
-    <a
-      href="javascript:void(0);"
-      class={gb.tk}
-      onClick={clk}
-      href="javascript:void(0);"
-    >
+    <a href="javascript:void(0);" class={gb.tk} onClick={clk}>
       {token_emojis[props.tk_id]}
     </a>
   );
@@ -134,6 +160,7 @@ export default function GameBoard(props) {
   const [tkp, setTkp] = useState([]);
   const [m, setM] = useState(-2);
   const [info, setInfo] = useState("Click here to toss");
+  const [player, setPlayer] = useState(0);
   // const [locked, setLock] = useState(true);
   // const unlock = () => setLock(false);
   // const lock = () => setLock(true);
@@ -148,11 +175,13 @@ export default function GameBoard(props) {
             tokens.push(json[i] == undefined ? -420 : json[i]);
           setTkp(tokens);
           //valid
+          var m = json["m"];
+          var d = json["d"];
+          var p = json["p"] + 1;
+          setPlayer(p - 1);
+
           if (json["v"] == 1) {
             setInfo("Player " + json["p"] + " has moved");
-            var m = json["m"];
-            var d = json["d"];
-            var p = json["p"] + 1;
             if (m >= 0) {
               setInfo("Player " + p + "(AI) got " + d);
               setTimeout(
@@ -187,15 +216,10 @@ export default function GameBoard(props) {
               setM(-3);
               setDice(d);
               locked = true;
-              setInfo(
-                "Now turn for player " + json["p"] + "\nClick here to toss"
-              );
+              setInfo("Now turn for player " + p + "\nClick here to toss");
             }
-          }
-          if (json["v"] == 0)
-            setInfo(
-              "Invalid move for player " + json["p"] + "\nDice: " + json["d"]
-            );
+          } else if (json["v"] == 0)
+            setInfo("Invalid move for player " + p + "\nDice: " + json["d"]);
           else if (json["v"] == 3) setInfo("Game done!");
         });
     }
@@ -225,8 +249,18 @@ export default function GameBoard(props) {
   return (
     <div className={gb.entire_board}>
       <div>
-        <PlayerBox player_idx="3"></PlayerBox>
-        <PlayerBox player_idx="2"></PlayerBox>
+        <PlayerBox
+          player_idx="3"
+          tkp={tkp}
+          dice={dice}
+          cur_player={player}
+        ></PlayerBox>
+        <PlayerBox
+          player_idx="2"
+          tkp={tkp}
+          dice={dice}
+          cur_player={player}
+        ></PlayerBox>
       </div>
       <div>
         <div>
@@ -420,8 +454,18 @@ export default function GameBoard(props) {
         </div>
       </div>
       <div>
-        <PlayerBox player_idx="0"></PlayerBox>
-        <PlayerBox player_idx="1"></PlayerBox>
+        <PlayerBox
+          player_idx="0"
+          tkp={tkp}
+          dice={dice}
+          cur_player={player}
+        ></PlayerBox>
+        <PlayerBox
+          player_idx="1"
+          tkp={tkp}
+          dice={dice}
+          cur_player={player}
+        ></PlayerBox>
       </div>
     </div>
   );
