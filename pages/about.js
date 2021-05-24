@@ -11,7 +11,7 @@ export default function Home() {
       <Header></Header>
       <main className={styles.main__light}>
         <h1>About this game</h1>
-        <h3>
+        <h2>
           Back-end: OCaml with cohttp (
           <a
             class={styles.ref}
@@ -20,9 +20,9 @@ export default function Home() {
             source code
           </a>
           )(NetID needed)
-        </h3>
-        <h3>
-          Front-end: Next.js & Node.js (
+        </h2>
+        <h2>
+          Front-end: Next.js + Node.js (
           <a
             class={styles.ref}
             href="https://github.com/bentondecusin/Ludo-Front-End"
@@ -30,7 +30,22 @@ export default function Home() {
             source code
           </a>
           )
-        </h3>
+        </h2>
+        {/* <h2>
+          Our Team:
+          <a class={styles.ref} href="https://github.com/bentondecusin">
+            &nbsp; Benton CALS '23
+          </a>
+          <a class={styles.ref} href="">
+            &nbsp; Benton CALS '23
+          </a>
+          <a class={styles.ref} href="">
+            &nbsp; Benton CALS '23
+          </a>
+          <a class={styles.ref} href="">
+            &nbsp; Benton CALS '23
+          </a>
+        </h2> */}
       </main>
     </div>
   );
