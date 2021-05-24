@@ -106,11 +106,11 @@ function PlayerBox(props) {
             " : " +
             (token_pos < -200
               ? "Retired (Safe)"
-              : token_pos < 0
-              ? "Home (Safe)"
               : token_pos > 44
-              ? "On strip"
-              : "On track (Safe)")}
+              ? "On strip (Safe)"
+              : token_pos > 0
+              ? "On track (Not Safe)"
+              : "Home (Safe)")}
         </a>
       ))}
       <a>{player_id == curPlayer && !locked ? "Dice: " + dice : ""}</a>
