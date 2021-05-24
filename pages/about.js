@@ -22,13 +22,14 @@ export default function Home() {
           )(NetID needed)
         </h3>
         <h3>
-          Front-end: Next.js & Node.js{" "}
+          Front-end: Next.js & Node.js (
           <a
             class={styles.ref}
             href="https://github.com/bentondecusin/Ludo-Front-End"
           >
-            (source code)
+            source code
           </a>
+          )
         </h3>
       </main>
     </div>
