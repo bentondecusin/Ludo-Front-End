@@ -5,8 +5,8 @@
   "scripts": {
     "cus": "node server.js",
     "dev": "next dev -p 6942",
-    "build": "next build -p 6942",
-    "start": "next start -p 6942",
+    "build": "next build",
+    "start": "next start",
     "format": "prettier --write \"{,!(.next)/**/}*.{js, jsx}\""
   },
   "dependencies": {

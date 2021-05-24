@@ -229,7 +229,7 @@ export default function GameBoard(props) {
   const [dice, setDice] = useState(420);
 
   if (!started)
-    fetch("http://localhost:6942/api/exchange", startReq)
+    fetch("http://localhost:3000/api/exchange", startReq)
       .then(async (res) => res.json())
       .then((json) => {
         getStarted(true);
