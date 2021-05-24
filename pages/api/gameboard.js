@@ -190,7 +190,7 @@ export default function GameBoard(props) {
               );
               setTimeout(() => clk(cmdReq(m)), 1000 * benchmark);
             } else if (json["m"] == -1) {
-              setInfo("Now turn for player " + p + "(AI)");
+              setInfo("Turn for player " + p + "(AI)");
               //if you see this horrible code, don't be surprised
               setTimeout(() => {
                 console.log("ai" + p + " has no movables");
@@ -203,8 +203,8 @@ export default function GameBoard(props) {
                     p +
                     " has no movable tokens"
                 );
-                setTimeout(() => clk({}), 2000 * benchmark);
-              }, 2000 * benchmark);
+                setTimeout(() => clk({}), 1000 * benchmark);
+              }, 1000 * benchmark);
             } else if (json["m"] == -2) {
               console.log("pl" + p + " has no movables");
               locked = true;
