@@ -31,21 +31,24 @@ export default function Home() {
           </a>
           )
         </h2>
-        {/* <h2>
+        <h2>
           Our Team:
           <a class={styles.ref} href="https://github.com/bentondecusin">
-            &nbsp; Benton CALS '23
+            &nbsp; Benton Li
           </a>
+          ,
           <a class={styles.ref} href="">
-            &nbsp; Benton CALS '23
+            &nbsp; Melinda Fang
           </a>
+          ,
           <a class={styles.ref} href="">
-            &nbsp; Benton CALS '23
+            &nbsp; Guankai Zhai
           </a>
+          ,
           <a class={styles.ref} href="">
-            &nbsp; Benton CALS '23
+            &nbsp; Weiyan Wu
           </a>
-        </h2> */}
+        </h2>
       </main>
     </div>
   );
