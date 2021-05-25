@@ -2,7 +2,7 @@ import gb from "../../styles/gb.module.css";
 import React, { useState, useEffect } from "react";
 import styles from "../../styles/Home.module.css";
 
-const benchmark = 1;
+const benchmark = 0.5;
 function getAllIndices(arr, val) {
   var indices = [],
     i;
