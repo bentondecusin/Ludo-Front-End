@@ -1,34 +1,95 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ludo (3110-Final-Project)
 
-## Getting Started
+## Hi! Welcome to Ludo (Release Version)
 
-First, run the development server:
+## Game Manual
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+In short, this is a chess game that has many variants such as the Chinese variant Aeroplane chess and the Indian variant Pachisi.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+In the fully implemented version, the game is to be played by 4 players (2 human and 2 AI)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Each player has 4 tokens at "Home" and takes a turn in playing.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+The gameboard has 3 parts, Homes, Track, and Strips, each containing several squares.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+The token starts at Home, then moves around the Track, and finally enters the strips.
 
-## Learn More
+There are many criteria for winning, but they are to be implemented.
 
-To learn more about Next.js, take a look at the following resources:
+### In each round:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The player tosses a dice.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+If it is a six, the player may choose to
 
-## Deploy on Vercel
+1. Move a Home token to the Track or
+2. Forward a Track token by 6 squares
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+and  
+**After the movement, the player has a "bonus round", and he/she can
+toss the dice again**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+If it is not a six, the player can only move a Track token or Strip token by the squares of the number indicated by the dice.
+
+## Play the game
+
+We have are pleased to offer playing options for this game:
+
+1. Playing the game in a web browser
+2. Playing the game in a \*NIX System terminal
+
+### Play on a broswer
+
+Visit https://ludo-front-end.vercel.app :)
+
+### Play on a terminal
+
+Install the game (see below)
+
+In your terminal, type
+`git clone https://github.coecis.cornell.edu/cl2597/CS-3110-Final-Project`  
+`cd game_path`
+where game_path is the path of the game folder.
+
+Then type  
+`make play` (Terminal based, Smart AI, has timeout mechanism) or  
+`make ta` (Terminal based, Smart AI, no timeout mechanism) or  
+`make to` (Terminal based, Dull AI, has timeout mechanism) or  
+`make tr` (Terminal based, Dull AI, no timeout mechanism) or
+
+In a game you can either type `t` (toss) to toss a dice or `m i` (move i) to move token i (As the only player your token numbers will be 1, 2, 3 and 4.
+
+### For advanced user (hosting a server)
+
+Install Next.js and Node.js  
+`cd ludo-front-end`  
+`yarn` then `yarn dev`  
+Create local sever: `make ba`
+
+Now when you visit http://localhost:6942/, you can play the game on a browser!
+
+### For advanced user (customize the game!)
+
+Use the existing module to design your own AI algorithm, timeout mechanism, moving rule.
+
+## Installation
+
+### OCaml (basic part)
+
+We assume you have OCaml installed on your device.
+
+If you do not meet the system requirement, feel free to play the web game remotely during demo.
+
+### OCaml (server part)
+
+You may need to install gmp and lib-dev on your system  
+MacOS: `brew install libev` `brew install gmp`  
+Ubuntu: `apt install pkg-config`, `apt install libev-dev`, `apt install libgmp3-dev`
+
+`cd game_path`
+where game_path is the path of the game folder.
+`make install` to install the extra packages via opam
+
+### Node.js
+
+Check out https://nodejs.org/en/download/package-manager/
