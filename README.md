@@ -33,7 +33,7 @@ If it is not a six, the player can only move a Track token or Strip token by the
 
 ## Play the game
 
-We have are pleased to offer playing options for this game:
+We are pleased to offer playing options for this game:
 
 1. Playing the game in a web browser
 2. Playing the game in a \*NIX System terminal
