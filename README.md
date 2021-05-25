@@ -55,7 +55,7 @@ Then type
 `make play` (Terminal based, Smart AI, has timeout mechanism) or  
 `make ta` (Terminal based, Smart AI, no timeout mechanism) or  
 `make to` (Terminal based, Dull AI, has timeout mechanism) or  
-`make tr` (Terminal based, Dull AI, no timeout mechanism) or
+`make tr` (Terminal based, Dull AI, no timeout mechanism)
 
 In a game you can either type `t` (toss) to toss a dice or `m i` (move i) to move token i (As the only player your token numbers will be 1, 2, 3 and 4.
 
