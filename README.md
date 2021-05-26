@@ -35,7 +35,7 @@ If it is not a six, the player can only move a Track token or Strip token by the
 
 ## Play the game
 
-We have are pleased to offer playing options for this game:
+We are pleased to offer playing options for this game:
 
 1. Playing the game in a web browser
 2. Playing the game in a \*NIX System terminal
@@ -57,7 +57,7 @@ Then type
 `make play` (Terminal based, Smart AI, has timeout mechanism) or  
 `make ta` (Terminal based, Smart AI, no timeout mechanism) or  
 `make to` (Terminal based, Dull AI, has timeout mechanism) or  
-`make tr` (Terminal based, Dull AI, no timeout mechanism) or
+`make tr` (Terminal based, Dull AI, no timeout mechanism)
 
 In a game you can either type `t` (toss) to toss a dice or `m i` (move i) to move token i (As the only player your token numbers will be 1, 2, 3 and 4.
 
