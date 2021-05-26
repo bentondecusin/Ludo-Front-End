@@ -2,6 +2,8 @@
 
 ## Hi! Welcome to Ludo (Release Version)
 
+![Screen Shot of Webpage](/Ludo_Screenshot.png)
+
 ## Game Manual
 
 In short, this is a chess game that has many variants such as the Chinese variant Aeroplane chess and the Indian variant Pachisi.
@@ -93,3 +95,7 @@ where game_path is the path of the game folder.
 ### Node.js
 
 Check out https://nodejs.org/en/download/package-manager/
+
+## Our team
+
+Benton, Melinda, Captain Zhai & Nicole
