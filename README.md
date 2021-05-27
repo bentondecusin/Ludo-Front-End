@@ -77,12 +77,9 @@ Use the existing module to design your own AI algorithm, timeout mechanism, movi
 ## Installation
 
 ### OCaml (basic part)
+Check out https://ocaml.org/docs/install.html/  
 
-We assume you have OCaml installed on your device.
-
-If you do not meet the system requirement, feel free to play the web game remotely during demo.
-
-### OCaml (server part)
+### OCaml (Additionally)
 
 You may need to install gmp and lib-dev on your system  
 MacOS: `brew install libev` `brew install gmp`  
