@@ -1,4 +1,4 @@
-# Ludo (3110-Final-Project)
+# Ludo (CS 3110 Final Project)
 
 ## Hi! Welcome to Ludo (Release Version)
 
