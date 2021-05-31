@@ -28,7 +28,7 @@ If it is a six, the player may choose to
 2. Forward a Track token by 6 squares
 
 and  
-**After the movement, the player has a "bonus round", and he/she can
+**After the movement, the player has a "bonus round", and can
 toss the dice again**
 
 If it is not a six, the player can only move a Track token or Strip token by the squares of the number indicated by the dice.
